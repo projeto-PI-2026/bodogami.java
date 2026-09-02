@@ -4,8 +4,10 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.container-navbar {
-    justify-content: space-between;
+.navbar-alinhar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 .navbar {
     display: flex;
@@ -19,6 +21,17 @@ body {
     top: 0;
     left: 0;
     background-color: white;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+
+.navbar p {
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    color: #1C3157;
+    font-size: 18px;
 }
 
 .botao-jogos-navbar {
@@ -220,7 +233,7 @@ input {
 }
 
 .botao-adicionar-jogo-modal {
-        border: none;
+    border: none;
     background-color: #1198E6;
     width : 90%;
     font-size: 20px;
