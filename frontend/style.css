@@ -1,0 +1,238 @@
+body {
+    height: 100vh; 
+    margin: 0; 
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container-navbar {
+    justify-content: space-between;
+}
+.navbar {
+    display: flex;
+    flex-direction: column;
+    width: 14%;
+    padding: 10px;
+    border-right: solid 1px #1C3157;
+    height: 100vh;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: white;
+}
+
+.botao-jogos-navbar {
+    padding: 18px;
+    border-radius: 14px;
+    background-color: transparent;
+    color: #1C3157;
+    font-size: 16px;
+    font-weight: bold;
+    border: solid 1px #1C3157;
+}
+
+main, header{
+    margin-left: 16%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+}
+
+.container-busca {
+    display: flex;
+    gap: 40px;
+}
+
+.pesquisa {
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    
+}
+
+.pesquisa .icone {
+    position: absolute;
+    left: 12px; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    color: #888; 
+    pointer-events: none; 
+}
+
+.pesquisa input {
+    padding-left: 35px; 
+    height: 44px; 
+    width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+
+}
+
+.botao-adicionar-jogo {
+    border: none;
+    background-color: #1198E6;
+    width: 200px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    border-radius: 5px;
+    height: 50px;
+    
+}
+
+.botao-adicionar-jogo i{
+    color: white;
+}
+
+.container-jogo {
+    display: flex;
+    flex-direction: column;
+    width: 26%;
+}
+
+.info-jogo {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.botoes-jogo {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.botoes-jogo button {
+    border: none;
+    align-items: center;
+    display: flex;
+}
+
+.botao-add-qtd, .botao-remove-qtd {
+    padding: 15px;
+    border-radius: 2px;
+    height: 40px;
+    width: 50px;
+    justify-content: center;
+}
+
+.botao-deleta-jogo {
+        background-color: #E95A2F;
+    width: 150px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    border-radius: 2px;
+    height: 40px;
+}
+
+.botao-add-qtd {
+    background-color: #1198E6;
+    color: white;
+}
+
+.botao-remove-qtd {
+    background-color: #ff0000;
+    color: white;
+}
+
+
+.modal-overlay {
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); 
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-overlay.ativo {
+  display: flex;
+}
+
+.modal-conteudo {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 600px; 
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.botao-fechar {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.botao-fechar:hover {
+  color: #000;
+}
+
+input {
+    border-radius: 4px;
+    height: 26px;
+    width: 240px;
+}
+
+.separacao-div {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.separacao-div-3 {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.separacao-div-3 input, .separacao-div-3 select {
+    display: flex;
+    justify-content: space-around;
+    width: 100px;
+    height: 28px;
+}
+
+.botao-adicionar-jogo-modal {
+        border: none;
+    background-color: #1198E6;
+    width : 90%;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin: auto;
+    margin-top: 20px;
+    border-radius: 5px;
+    height: 40px;
+}
+
