@@ -6,33 +6,33 @@ public class Jogo {
     private String descricao;
     private String editora;
     private Double valor_aluguel_diaria;
-    private Integer tipo_jogo;
     private String imagem_url;
     private Integer min_jogadores;
     private Integer max_jogadores;
     private Integer idade_min;
     private Integer quantidade;
+    private Integer id_genero;
+    private Integer fk_tipo_jogo;
 
-    public Jogo() {
-    }
-
-    public Jogo(Integer id_jogo, String nome, String descricao,
-                String editora, Double valor_aluguel_diaria, Integer tipo_jogo,
-                String imagem_url, Integer min_jogadores, Integer max_jogadores,
-                Integer idade_min, Integer quantidade) {
+    public Jogo(Integer id_jogo, String nome, String descricao, String editora, Double valor_aluguel_diaria,
+                String imagem_url, Integer min_jogadores, Integer max_jogadores, Integer idade_min,
+                Integer quantidade, Integer id_genero, Integer fk_tipo_jogo) {
 
         this.id_jogo = id_jogo;
         this.nome = nome;
         this.descricao = descricao;
         this.editora = editora;
         this.valor_aluguel_diaria = valor_aluguel_diaria;
-        this.tipo_jogo = tipo_jogo;
         this.imagem_url = imagem_url;
         this.min_jogadores = min_jogadores;
         this.max_jogadores = max_jogadores;
         this.idade_min = idade_min;
         this.quantidade = quantidade;
+        this.id_genero = id_genero;
+        this.fk_tipo_jogo = fk_tipo_jogo;
+    }
 
+    public Jogo() {
     }
 
     public Integer getId_jogo() {
@@ -75,14 +75,6 @@ public class Jogo {
         this.valor_aluguel_diaria = valor_aluguel_diaria;
     }
 
-    public Integer getTipo_jogo() {
-        return tipo_jogo;
-    }
-
-    public void setTipo_jogo(Integer tipo_jogo) {
-        this.tipo_jogo = tipo_jogo;
-    }
-
     public String getImagem_url() {
         return imagem_url;
     }
@@ -121,5 +113,21 @@ public class Jogo {
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public Integer getId_genero() {
+        return id_genero;
+    }
+
+    public void setId_genero(Integer id_genero) {
+        this.id_genero = id_genero;
+    }
+
+    public Integer getFk_tipo_jogo() {
+        return fk_tipo_jogo;
+    }
+
+    public void setFk_tipo_jogo(Integer fk_tipo_jogo) {
+        this.fk_tipo_jogo = fk_tipo_jogo;
     }
 }
