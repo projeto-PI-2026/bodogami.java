@@ -3,8 +3,12 @@ package com.nexatech.bodogami;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 @RestController
@@ -55,7 +59,80 @@ public class JogoController {
         return ResponseEntity.status(200).body(generos);
     }
 
+    @PostMapping
+    public ResponseEntity<Jogo> criarJogo(@RequestBody Jogo jogo) {
 
-    //amanha irei o resto do CRUD amanha
+        if (jogo.getNome() == null || jogo.getNome().isBlank()) {
+            return ResponseEntity.status(400).build();
+        }
+
+        String sql = "INSERT INTO jogo (fk_tipo_jogo, nome, descricao, editora," +
+                " valor_aluguel_diaria, imagem_url, min_jogadores, max_jogadores, idade_min)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement(
+                    sql, Statement.RETURN_GENERATED_KEYS
+            );
+
+            ps.setInt(1, jogo.getFk_tipo_jogo());
+            ps.setString(2, jogo.getNome());
+            ps.setString(3, jogo.getDescricao());
+            ps.setString(4, jogo.getEditora());
+            ps.setDouble(5, jogo.getValor_aluguel_diaria());
+            ps.setString(6, jogo.getImagem_url());
+            ps.setInt(7, jogo.getMin_jogadores());
+            ps.setInt(8, jogo.getMax_jogadores());
+            ps.setInt(9, jogo.getIdade_min());
+
+            return ps;
+        }, keyHolder);
+
+        Integer idGerado = keyHolder.getKeyAs(Integer.class);
+        jogo.setId_jogo(idGerado);
+
+        if (idGerado != null && jogo.getId_genero() != null) {
+
+            String sqlRelacao = "INSERT INTO jogo_genero (fk_genero, fk_jogo) VALUES (?, ?)";
+
+            jdbcTemplate.update(sqlRelacao, jogo.getId_genero(), idGerado);
+
+        }
+        return ResponseEntity.status(200).body(jogo);
+    }
+
+    @PostMapping("/{id}/adicionar")
+    public ResponseEntity<Void> adicionarExemplar(@PathVariable Integer id) {
+
+        String sql = "INSERT INTO exemplar (codigo_jogo, estado_conservacao, status, data_aquisicao, fk_jogo)" +
+                " VALUES ('DEFAULT', 'Novo', 'Disponível', CURRENT_TIMESTAMP, ?)";
+        //valores para exemplar mocados porque não vamos usar por agora
+
+        jdbcTemplate.update(sql, id);
+
+        return ResponseEntity.status(200).build();
+    }
+
+    @DeleteMapping("/{id}/remover")
+
+    public ResponseEntity<Void> removerExemplar(@PathVariable Integer id) {
+
+        String sql = "SELECT id_exemplar FROM exemplar WHERE fk_jogo = ? LIMIT 1";
+
+        List<Integer> encontrados = jdbcTemplate.queryForList(sql, Integer.class, id);
+
+        if (encontrados.isEmpty()) {
+            return ResponseEntity.status(400).build();
+        }
+
+        String sqlD = "DELETE FROM exemplar WHERE id_exemplar = ?";
+        jdbcTemplate.update(sqlD, encontrados.get(0));
+        return ResponseEntity.status(204).build();
+    }
+
+
+
 
 }
