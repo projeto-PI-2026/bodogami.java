@@ -162,6 +162,16 @@ public class JogoController {
         return ResponseEntity.status(204).build();
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarJogo(@PathVariable Integer id) {
+        Integer existe = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM jogo WHERE id_jogo = ?", Integer.class, id);
+        if (existe == null || existe == 0) {
+            return ResponseEntity.status(404).build();
+        }
+        jdbcTemplate.update("DELETE FROM jogo WHERE id_jogo = ?", id);
+        return ResponseEntity.status(204).build();
+    }
+
 
 
 
