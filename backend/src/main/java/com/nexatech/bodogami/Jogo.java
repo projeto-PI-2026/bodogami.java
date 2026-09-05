@@ -39,6 +39,10 @@ public class Jogo {
     public Jogo() {
     }
 
+    public Integer getId_jogo() {
+        return id_jogo;
+    }
+
     public void setId_jogo(Integer id_jogo) {
         this.id_jogo = id_jogo;
     }
