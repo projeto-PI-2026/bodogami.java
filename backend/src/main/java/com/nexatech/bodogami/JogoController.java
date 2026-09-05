@@ -38,6 +38,10 @@ public class JogoController {
     @GetMapping("/buscar")
     public ResponseEntity<List<Jogo>> buscarPorNome(@RequestParam String nome) {
 
+        if (nome == null || nome.isBlank()) {
+            return ResponseEntity.status(400).build();
+        }
+
         String sql = "SELECT *, (SELECT COUNT(id_exemplar) FROM exemplar WHERE fk_jogo = id_jogo) AS" +
                 " quantidade FROM jogo WHERE LOWER(nome) LIKE LOWER(?)";
 
