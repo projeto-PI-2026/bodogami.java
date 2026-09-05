@@ -73,6 +73,13 @@ public class JogoController {
 
         }
 
+        if (jogo.getMin_jogadores() > jogo.getMax_jogadores() ||
+                jogo.getValor_aluguel_diaria() <= 0 ||
+                jogo.getIdade_min() < 0 ||
+                jogo.getMin_jogadores() <= 0) {
+            return ResponseEntity.status(400).build();
+        }
+
         String sql = "INSERT INTO jogo (fk_tipo_jogo, nome, descricao, editora," +
                 " valor_aluguel_diaria, imagem_url, min_jogadores, max_jogadores, idade_min)" +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
