@@ -26,10 +26,9 @@ public class JogoController {
     public ResponseEntity<List<Jogo>> listarTodos() {
         String sql = "SELECT j.*, " +
                 "(SELECT COUNT(id_exemplar) FROM exemplar WHERE fk_jogo = j.id_jogo) AS quantidade, " +
-                "t.nome_tipo AS nome_tipo, g.nome  AS nome_genero " +
-                "FROM jogo j JOIN tipo_jogo t ON j.fk_tipo_jogo = t.id_tipo_jogo " +
-                "LEFT JOIN jogo_genero jg ON jg.fk_jogo = j.id_jogo " +
-                "LEFT JOIN genero g ON g.id_genero = jg.fk_genero";
+                "t.nome_tipo AS nome_tipo, " +
+                "(SELECT STRING_AGG(g.nome, ', ') FROM jogo_genero jg JOIN genero g ON g.id_genero = jg.fk_genero WHERE jg.fk_jogo = j.id_jogo) AS nome_genero " +
+                "FROM jogo j JOIN tipo_jogo t ON j.fk_tipo_jogo = t.id_tipo_jogo";
 
         List<Jogo> jogos = jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Jogo.class));
 
