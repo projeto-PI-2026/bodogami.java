@@ -134,7 +134,7 @@ public class JogoController {
         List<Integer> encontrados = jdbcTemplate.queryForList(sql, Integer.class, id);
 
         if (encontrados.isEmpty()) {
-            return ResponseEntity.status(400).build();
+            return ResponseEntity.status(404).build();
         }
 
         String sqlD = "DELETE FROM exemplar WHERE id_exemplar = ?";
