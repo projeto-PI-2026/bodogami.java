@@ -115,6 +115,11 @@ public class JogoController {
     @PostMapping("/{id}/adicionar")
     public ResponseEntity<Void> adicionarExemplar(@PathVariable Integer id) {
 
+        Integer existe = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM jogo WHERE id_jogo = ?", Integer.class, id);
+        if (existe == null || existe == 0) {
+            return ResponseEntity.status(404).build();
+        }
+
         String sql = "INSERT INTO exemplar (codigo_jogo, estado_conservacao, status, data_aquisicao, fk_jogo)" +
                 " VALUES ('DEFAULT', 'Novo', 'Disponível', CURRENT_TIMESTAMP, ?)";
         //valores para exemplar mocados porque não vamos usar por agora
