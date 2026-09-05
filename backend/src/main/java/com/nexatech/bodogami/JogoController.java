@@ -80,6 +80,11 @@ public class JogoController {
             return ResponseEntity.status(400).build();
         }
 
+        Integer tipoExiste = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM tipo_jogo WHERE id_tipo_jogo = ?", Integer.class, jogo.getFk_tipo_jogo());
+        if (tipoExiste == null || tipoExiste == 0) {
+            return ResponseEntity.status(400).build();
+        }
+
         String sql = "INSERT INTO jogo (fk_tipo_jogo, nome, descricao, editora," +
                 " valor_aluguel_diaria, imagem_url, min_jogadores, max_jogadores, idade_min)" +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
