@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/jogos")
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 public class JogoController {
 
     private final JdbcTemplate jdbcTemplate;
@@ -140,6 +140,59 @@ public class JogoController {
 
         return ResponseEntity.status(201).body(jogo);
 
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Jogo> atualizarJogo(@PathVariable Integer id, @RequestBody Jogo jogo) {
+        Integer existe = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM jogo WHERE id_jogo = ?", Integer.class, id);
+        if (existe == null || existe == 0) {
+            return ResponseEntity.status(404).build();
+        }
+
+        if (jogo.getNome() == null || jogo.getNome().isBlank() || jogo.getFk_tipo_jogo() == null ||
+                jogo.getValor_aluguel_diaria() == null || jogo.getMin_jogadores() == null ||
+                jogo.getMax_jogadores() == null || jogo.getIdade_min() == null) {
+            return ResponseEntity.status(400).build();
+        }
+
+        if (jogo.getMin_jogadores() > jogo.getMax_jogadores() ||
+                jogo.getValor_aluguel_diaria() <= 0 ||
+                jogo.getIdade_min() < 0 ||
+                jogo.getMin_jogadores() <= 0) {
+            return ResponseEntity.status(400).build();
+        }
+
+        Integer tipoExiste = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM tipo_jogo WHERE id_tipo_jogo = ?", Integer.class, jogo.getFk_tipo_jogo());
+        if (tipoExiste == null || tipoExiste == 0) {
+            return ResponseEntity.status(400).build();
+        }
+
+        String sql = "UPDATE jogo SET fk_tipo_jogo = ?, nome = ?, descricao = ?, editora = ?, " +
+                "valor_aluguel_diaria = ?, imagem_url = ?, min_jogadores = ?, max_jogadores = ?, idade_min = ? " +
+                "WHERE id_jogo = ?";
+        jdbcTemplate.update(sql,
+                jogo.getFk_tipo_jogo(),
+                jogo.getNome(),
+                jogo.getDescricao(),
+                jogo.getEditora(),
+                jogo.getValor_aluguel_diaria(),
+                jogo.getImagem_url(),
+                jogo.getMin_jogadores(),
+                jogo.getMax_jogadores(),
+                jogo.getIdade_min(),
+                id);
+
+        if (jogo.getId_genero() != null) {
+            Integer generoExiste = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM genero WHERE id_genero = ?", Integer.class, jogo.getId_genero());
+            if (generoExiste == null || generoExiste == 0) {
+                return ResponseEntity.status(400).build();
+            }
+            jdbcTemplate.update("DELETE FROM jogo_genero WHERE fk_jogo = ?", id);
+            jdbcTemplate.update("INSERT INTO jogo_genero (fk_genero, fk_jogo) VALUES (?, ?)", jogo.getId_genero(), id);
+        }
+
+        jogo.setId_jogo(id);
+        return ResponseEntity.status(200).body(jogo);
     }
 
     @PostMapping("/{id}/adicionar")
