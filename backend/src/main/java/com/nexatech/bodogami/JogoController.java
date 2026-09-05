@@ -24,10 +24,14 @@ public class JogoController {
 
     @GetMapping
     public ResponseEntity<List<Jogo>> listarTodos() {
-        String sql = "SELECT *, (SELECT COUNT(id_exemplar) " +
-                "FROM exemplar WHERE fk_jogo = id_jogo) AS quantidade FROM jogo";
+        String sql = "SELECT j.*, " +
+                "(SELECT COUNT(id_exemplar) FROM exemplar WHERE fk_jogo = j.id_jogo) AS quantidade, " +
+                "t.nome_tipo AS nome_tipo, g.nome  AS nome_genero " +
+                "FROM jogo j JOIN tipo_jogo t ON j.fk_tipo_jogo = t.id_tipo_jogo " +
+                "LEFT JOIN jogo_genero jg ON jg.fk_jogo = j.id_jogo " +
+                "LEFT JOIN genero g ON g.id_genero = jg.fk_genero";
 
-        List<Jogo> jogos = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Jogo.class));
+        List<Jogo> jogos = jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Jogo.class));
 
         return ResponseEntity.status(200).body(jogos);
     }
@@ -62,8 +66,12 @@ public class JogoController {
     @PostMapping
     public ResponseEntity<Jogo> criarJogo(@RequestBody Jogo jogo) {
 
-        if (jogo.getNome() == null || jogo.getNome().isBlank()) {
+        if (jogo.getNome() == null || jogo.getNome().isBlank() || jogo.getFk_tipo_jogo() == null ||
+                jogo.getValor_aluguel_diaria() == null || jogo.getMin_jogadores() == null ||
+                jogo.getMax_jogadores() == null || jogo.getIdade_min() == null) {
+
             return ResponseEntity.status(400).build();
+
         }
 
         String sql = "INSERT INTO jogo (fk_tipo_jogo, nome, descricao, editora," +
@@ -100,7 +108,9 @@ public class JogoController {
             jdbcTemplate.update(sqlRelacao, jogo.getId_genero(), idGerado);
 
         }
-        return ResponseEntity.status(200).body(jogo);
+
+        return ResponseEntity.status(201).body(jogo);
+
     }
 
     @PostMapping("/{id}/adicionar")

@@ -13,11 +13,13 @@ public class Jogo {
     private Integer quantidade;
     private Integer id_genero;
     private Integer fk_tipo_jogo;
+    private String nomeTipo;
+    private String nomeGenero;
 
-    public Jogo(Integer id_jogo, String nome, String descricao, String editora, Double valor_aluguel_diaria,
-                String imagem_url, Integer min_jogadores, Integer max_jogadores, Integer idade_min,
-                Integer quantidade, Integer id_genero, Integer fk_tipo_jogo) {
-
+    public Jogo (Integer id_jogo, String nome, String descricao, String editora,
+                Double valor_aluguel_diaria, String imagem_url, Integer min_jogadores,
+                Integer max_jogadores, Integer idade_min, Integer quantidade, Integer id_genero,
+                Integer fk_tipo_jogo, String nomeTipo, String nomeGenero) {
         this.id_jogo = id_jogo;
         this.nome = nome;
         this.descricao = descricao;
@@ -30,13 +32,11 @@ public class Jogo {
         this.quantidade = quantidade;
         this.id_genero = id_genero;
         this.fk_tipo_jogo = fk_tipo_jogo;
+        this.nomeTipo = nomeTipo;
+        this.nomeGenero = nomeGenero;
     }
 
     public Jogo() {
-    }
-
-    public Integer getId_jogo() {
-        return id_jogo;
     }
 
     public void setId_jogo(Integer id_jogo) {
@@ -129,5 +129,21 @@ public class Jogo {
 
     public void setFk_tipo_jogo(Integer fk_tipo_jogo) {
         this.fk_tipo_jogo = fk_tipo_jogo;
+    }
+
+    public String getNomeTipo() {
+        return nomeTipo;
+    }
+
+    public void setNomeTipo(String nomeTipo) {
+        this.nomeTipo = nomeTipo;
+    }
+
+    public String getNomeGenero() {
+        return nomeGenero;
+    }
+
+    public void setNomeGenero(String nomeGenero) {
+        this.nomeGenero = nomeGenero;
     }
 }

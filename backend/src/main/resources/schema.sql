@@ -48,3 +48,4 @@ CREATE TABLE jogo_genero (
     CONSTRAINT fk_jogogenero_jogo FOREIGN KEY (fk_jogo)
         REFERENCES jogo (id_jogo)
 );
+
