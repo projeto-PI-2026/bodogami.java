@@ -44,8 +44,8 @@ CREATE TABLE jogo_genero (
     fk_jogo   INT NOT NULL,
     PRIMARY KEY (fk_genero, fk_jogo),
     CONSTRAINT fk_jogogenero_genero FOREIGN KEY (fk_genero)
-        REFERENCES genero (id_genero),
+        REFERENCES genero (id_genero) ON DELETE CASCADE,
     CONSTRAINT fk_jogogenero_jogo FOREIGN KEY (fk_jogo)
-        REFERENCES jogo (id_jogo)
+        REFERENCES jogo (id_jogo) ON DELETE CASCADE
 );
 

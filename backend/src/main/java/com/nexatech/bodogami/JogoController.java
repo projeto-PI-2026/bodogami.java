@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/jogos")
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 public class JogoController {
 
     private final JdbcTemplate jdbcTemplate;
@@ -26,10 +26,9 @@ public class JogoController {
     public ResponseEntity<List<Jogo>> listarTodos() {
         String sql = "SELECT j.*, " +
                 "(SELECT COUNT(id_exemplar) FROM exemplar WHERE fk_jogo = j.id_jogo) AS quantidade, " +
-                "t.nome_tipo AS nome_tipo, g.nome  AS nome_genero " +
-                "FROM jogo j JOIN tipo_jogo t ON j.fk_tipo_jogo = t.id_tipo_jogo " +
-                "LEFT JOIN jogo_genero jg ON jg.fk_jogo = j.id_jogo " +
-                "LEFT JOIN genero g ON g.id_genero = jg.fk_genero";
+                "t.nome_tipo AS nome_tipo, " +
+                "(SELECT STRING_AGG(g.nome, ', ') FROM jogo_genero jg JOIN genero g ON g.id_genero = jg.fk_genero WHERE jg.fk_jogo = j.id_jogo) AS nome_genero " +
+                "FROM jogo j JOIN tipo_jogo t ON j.fk_tipo_jogo = t.id_tipo_jogo";
 
         List<Jogo> jogos = jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Jogo.class));
 
@@ -39,6 +38,10 @@ public class JogoController {
     @GetMapping("/buscar")
     public ResponseEntity<List<Jogo>> buscarPorNome(@RequestParam String nome) {
 
+        if (nome == null || nome.isBlank()) {
+            return ResponseEntity.status(400).build();
+        }
+
         String sql = "SELECT *, (SELECT COUNT(id_exemplar) FROM exemplar WHERE fk_jogo = id_jogo) AS" +
                 " quantidade FROM jogo WHERE LOWER(nome) LIKE LOWER(?)";
 
@@ -46,6 +49,20 @@ public class JogoController {
                 new BeanPropertyRowMapper<>(Jogo.class), "%" + nome + "%");
 
         return ResponseEntity.status(200).body(jogos);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Jogo> buscarPorId(@PathVariable Integer id) {
+        String sql = "SELECT j.*, " +
+                "(SELECT COUNT(id_exemplar) FROM exemplar WHERE fk_jogo = j.id_jogo) AS quantidade, " +
+                "t.nome_tipo AS nome_tipo, " +
+                "(SELECT STRING_AGG(g.nome, ', ') FROM jogo_genero jg JOIN genero g ON g.id_genero = jg.fk_genero WHERE jg.fk_jogo = j.id_jogo) AS nome_genero " +
+                "FROM jogo j JOIN tipo_jogo t ON j.fk_tipo_jogo = t.id_tipo_jogo WHERE j.id_jogo = ?";
+        List<Jogo> jogos = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Jogo.class), id);
+        if (jogos.isEmpty()) {
+            return ResponseEntity.status(404).build();
+        }
+        return ResponseEntity.status(200).body(jogos.get(0));
     }
 
     @GetMapping("/tipos")
@@ -72,6 +89,18 @@ public class JogoController {
 
             return ResponseEntity.status(400).build();
 
+        }
+
+        if (jogo.getMin_jogadores() > jogo.getMax_jogadores() ||
+                jogo.getValor_aluguel_diaria() <= 0 ||
+                jogo.getIdade_min() < 0 ||
+                jogo.getMin_jogadores() <= 0) {
+            return ResponseEntity.status(400).build();
+        }
+
+        Integer tipoExiste = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM tipo_jogo WHERE id_tipo_jogo = ?", Integer.class, jogo.getFk_tipo_jogo());
+        if (tipoExiste == null || tipoExiste == 0) {
+            return ResponseEntity.status(400).build();
         }
 
         String sql = "INSERT INTO jogo (fk_tipo_jogo, nome, descricao, editora," +
@@ -113,8 +142,66 @@ public class JogoController {
 
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Jogo> atualizarJogo(@PathVariable Integer id, @RequestBody Jogo jogo) {
+        Integer existe = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM jogo WHERE id_jogo = ?", Integer.class, id);
+        if (existe == null || existe == 0) {
+            return ResponseEntity.status(404).build();
+        }
+
+        if (jogo.getNome() == null || jogo.getNome().isBlank() || jogo.getFk_tipo_jogo() == null ||
+                jogo.getValor_aluguel_diaria() == null || jogo.getMin_jogadores() == null ||
+                jogo.getMax_jogadores() == null || jogo.getIdade_min() == null) {
+            return ResponseEntity.status(400).build();
+        }
+
+        if (jogo.getMin_jogadores() > jogo.getMax_jogadores() ||
+                jogo.getValor_aluguel_diaria() <= 0 ||
+                jogo.getIdade_min() < 0 ||
+                jogo.getMin_jogadores() <= 0) {
+            return ResponseEntity.status(400).build();
+        }
+
+        Integer tipoExiste = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM tipo_jogo WHERE id_tipo_jogo = ?", Integer.class, jogo.getFk_tipo_jogo());
+        if (tipoExiste == null || tipoExiste == 0) {
+            return ResponseEntity.status(400).build();
+        }
+
+        String sql = "UPDATE jogo SET fk_tipo_jogo = ?, nome = ?, descricao = ?, editora = ?, " +
+                "valor_aluguel_diaria = ?, imagem_url = ?, min_jogadores = ?, max_jogadores = ?, idade_min = ? " +
+                "WHERE id_jogo = ?";
+        jdbcTemplate.update(sql,
+                jogo.getFk_tipo_jogo(),
+                jogo.getNome(),
+                jogo.getDescricao(),
+                jogo.getEditora(),
+                jogo.getValor_aluguel_diaria(),
+                jogo.getImagem_url(),
+                jogo.getMin_jogadores(),
+                jogo.getMax_jogadores(),
+                jogo.getIdade_min(),
+                id);
+
+        if (jogo.getId_genero() != null) {
+            Integer generoExiste = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM genero WHERE id_genero = ?", Integer.class, jogo.getId_genero());
+            if (generoExiste == null || generoExiste == 0) {
+                return ResponseEntity.status(400).build();
+            }
+            jdbcTemplate.update("DELETE FROM jogo_genero WHERE fk_jogo = ?", id);
+            jdbcTemplate.update("INSERT INTO jogo_genero (fk_genero, fk_jogo) VALUES (?, ?)", jogo.getId_genero(), id);
+        }
+
+        jogo.setId_jogo(id);
+        return ResponseEntity.status(200).body(jogo);
+    }
+
     @PostMapping("/{id}/adicionar")
     public ResponseEntity<Void> adicionarExemplar(@PathVariable Integer id) {
+
+        Integer existe = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM jogo WHERE id_jogo = ?", Integer.class, id);
+        if (existe == null || existe == 0) {
+            return ResponseEntity.status(404).build();
+        }
 
         String sql = "INSERT INTO exemplar (codigo_jogo, estado_conservacao, status, data_aquisicao, fk_jogo)" +
                 " VALUES ('DEFAULT', 'Novo', 'Disponível', CURRENT_TIMESTAMP, ?)";
@@ -134,11 +221,21 @@ public class JogoController {
         List<Integer> encontrados = jdbcTemplate.queryForList(sql, Integer.class, id);
 
         if (encontrados.isEmpty()) {
-            return ResponseEntity.status(400).build();
+            return ResponseEntity.status(404).build();
         }
 
         String sqlD = "DELETE FROM exemplar WHERE id_exemplar = ?";
         jdbcTemplate.update(sqlD, encontrados.get(0));
+        return ResponseEntity.status(204).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarJogo(@PathVariable Integer id) {
+        Integer existe = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM jogo WHERE id_jogo = ?", Integer.class, id);
+        if (existe == null || existe == 0) {
+            return ResponseEntity.status(404).build();
+        }
+        jdbcTemplate.update("DELETE FROM jogo WHERE id_jogo = ?", id);
         return ResponseEntity.status(204).build();
     }
 
