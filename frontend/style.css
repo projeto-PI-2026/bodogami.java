@@ -4,34 +4,36 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.navbar-alinhar {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.container-navbar {
+    justify-content: space-between;
 }
+
 .navbar {
     display: flex;
     flex-direction: column;
-    width: 14%;
-    padding: 10px;
+    justify-content: space-between;
+    width: 14%; 
+    height: 100vh; 
+    padding: 20px 10px;
     border-right: solid 1px #1C3157;
-    height: 100vh;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
     background-color: white;
-    justify-content: space-between;
-    box-sizing: border-box;
+    box-sizing: border-box; 
 }
 
+.navbar-alinhar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
 .navbar p {
     text-align: center;
     cursor: pointer;
-    font-weight: bold;
-    color: #1C3157;
-    font-size: 18px;
+    margin: 0; 
 }
 
 .botao-jogos-navbar {
@@ -107,10 +109,22 @@ main, header{
     color: white;
 }
 
+main section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px; 
+    padding: 20px;
+}
+
 .container-jogo {
     display: flex;
     flex-direction: column;
-    width: 26%;
+    width: 22%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 .info-jogo {
@@ -233,7 +247,7 @@ input {
 }
 
 .botao-adicionar-jogo-modal {
-    border: none;
+        border: none;
     background-color: #1198E6;
     width : 90%;
     font-size: 20px;
