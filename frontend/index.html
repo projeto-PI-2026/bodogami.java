@@ -29,111 +29,92 @@
     <header >
     <section class="header">
         
-            <div>
-                <h2>  Jogos de Tabuleiro > Estoque </h2>
-            </div>
+        <div>
+            <h2>  Jogos de Tabuleiro > Estoque </h2>
+        </div>
 
-            <div class="container-busca">
+        <div class="container-busca">
 
-            <nav class="pesquisa">
-                <i class="fa fa-search icone" aria-hidden="true"></i>
-                <input type="text" name="" id=""  >
-            </nav>
+        <nav class="pesquisa">
+            <i class="fa fa-search icone" aria-hidden="true"></i>
+            <input type="text" name="" id="input-pesquisa"  >
+        </nav>
 
-            <button class="botao-adicionar-jogo">Novo Jogo <i class="fa fa-plus" aria-hidden="true"></i></button>
-            </div>
+        <button class="botao-adicionar-jogo">Novo Jogo <i class="fa fa-plus" aria-hidden="true"></i></button>
+        </div>
 
-            <div id="modal-jogo" class="modal-overlay">
-                <div class="modal-conteudo">
+        <div id="modal-jogo" class="modal-overlay">
+            <div class="modal-conteudo" id="conteudo">
 
-                    <span class="botao-fechar">&times;</span>
-    
-                    <h2>Adicionar Novo Jogo</h2>
+                <span class="botao-fechar">&times;</span>
 
-                    <div class="separacao-div">
+                <h2>Adicionar Novo Jogo</h2>
+
+                <div class="separacao-div">
                     <label for="">
                         <p>Nome do Jogo</p> 
-                        <input type="text" name="" id="">
+                        <input type="text" name="" id="nome-jogo">
                     </label>
 
                     <label for="">
                         <p>Descrição</p>
-                        <input type="text" name="" id="">
+                        <input type="text" name="" id="descricao-jogo">
                     </label>
-                    </div>
+                </div>
 
-                    <div class="separacao-div-3">
+                <div class="separacao-div-3">
                     <label for="">
                         <p> Minimo de jogadores </p>
-                        <input type="text" name="" id="">
+                        <input type="text" name="" id="minimo-jogadores">
                     </label>
 
                     <label for="">
                         <p>Máximo de jogadores </p>
-                        <input type="text" name="" id="">
+                        <input type="text" name="" id="maximo-jogadores">
                     </label>
-                    
+
+                    <label for=" ">
+                        <p>Idade Mínima</p>
+                        <input type="text" name="" id="idade-minima">
+                    </label>
+                </div>
+
+                <div class="separacao-div">
+                    <label for="">
+                        <p>Gênero</p>
+                        <select name="" id="selecionar-genero">
+                        </select>
+                    </label>
 
                     <label for="">
                         <p>Tipo do Jogo</p>
-                        <select name="" id="">
-                            <option value="">RPG</option>
-                            <option value="">Aventura</option>
-                            <option value="">Terror</option>
-                            <option value="">Ação</option>
+                        <select name="" id="selecionar-tipo-jogo">
                         </select>
                     </label>
-                    </div>
+                </div>
 
-                    
-                    <div class="separacao-div">
+                <div class="separacao-div">
                     <label for="">
                         <p>Editora</p>
-                        <input type="text" name="" id="">
-                    </label>
-
-                    <label for="">
-                        <p>Valor do Aluguel</p>
-                        <input type="text" name="" id="">
-                    </label>
-                    </div>
-
-
-                    <div class="separacao-div">
-                    <label for=" ">
-                        <p>Idade Mínima</p>
-                        <input type="text" name="" id="">
+                        <input type="text" name="" id="nome-editora">
                     </label>
 
                     <label for="">
                         <p>Valor do Aluguel Diária</p>
-                        <input type="text" name="" id="">
+                        <input type="text" name="" id="valor-diaria">
                     </label>
-                    </div>
-
-                    <button class="botao-adicionar-jogo-modal">Adicionar Jogo </button>
                 </div>
+
+                <button class="botao-adicionar-jogo-modal" id="adicionar-jogo">Adicionar Jogo </button>
             </div>
+        </div>
         
     </section>
     </header>
 
     <main>
-    <section>
-        <div class="container-jogo">
-            <img src="imagem-jogo.png" alt="">
-
-            <div class="info-jogo">
-                <p>Zombicide: Black Plague</p>
-                <p>Qtd: 2</p>
-            </div>
-
-            <div class="botoes-jogo">
-                <button class="botao-add-qtd"> <i class="fa fa-plus" aria-hidden="true"></i> </button>
-                <button class="botao-remove-qtd"> <i class="fa fa-minus" aria-hidden="true"></i> </button>
-                <button class="botao-deleta-jogo"> Deletar Jogo </button>
-            </div>
-        </div>
+    <section id="container-lista-jogos">
+       
     </section>
     </main>
 
