@@ -263,3 +263,11 @@ input {
     height: 40px;
 }
 
+
+select {
+    padding: 8px;
+    border: solid 2px black;
+    border-radius: 5px;
+    width: 120px;
+    font-size: 14px;
+}
