@@ -49,7 +49,10 @@ CREATE TABLE jogo_genero (
         REFERENCES jogo (id_jogo) ON DELETE CASCADE
 );
 
-INSERT INTO tipo_jogo (nome_tipo, descricao) VALUES ('RPG', 'Jogos de interpretação de papéis');
-INSERT INTO tipo_jogo (nome_tipo, descricao) VALUES ('Aventura', 'Jogos de exploração e missões');
-INSERT INTO tipo_jogo (nome_tipo, descricao) VALUES ('Terror', 'Jogos de suspense e sobrevivência');
-INSERT INTO tipo_jogo (nome_tipo, descricao) VALUES ('Ação', 'Jogos dinâmicos e de combate');
+INSERT INTO genero (nome, descricao) VALUES ('RPG', 'Jogos de interpretação de papéis');
+INSERT INTO genero (nome, descricao) VALUES ('Aventura', 'Jogos de exploração e missões');
+INSERT INTO genero (nome, descricao) VALUES ('Terror', 'Jogos de suspense e sobrevivência');
+INSERT INTO genero (nome, descricao) VALUES ('Ação', 'Jogos dinâmicos e de combate');
+INSERT INTO tipo_jogo (nome_tipo, descricao) VALUES ('Tabuleiro', 'Jogos jogados sobre um tabuleiro físico');
+INSERT INTO tipo_jogo (nome_tipo, descricao) VALUES ('Cartas', 'Jogos baseados em baralhos de cartas');
+INSERT INTO tipo_jogo (nome_tipo, descricao) VALUES ('Dados', 'Jogos baseados em rolagem de dados');

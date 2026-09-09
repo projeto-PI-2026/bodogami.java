@@ -28,8 +28,8 @@ botaoAdicionar.addEventListener("click", function() {
   const minimoJogadores = document.getElementById('minimo-jogadores').value;
   const maximoJogadores = document.getElementById('maximo-jogadores').value;
   const tipoJogo = document.getElementById('selecionar-tipo-jogo').value;
+  const generoSelecionado = document.getElementById('selecionar-genero').value;
   const nomeEditora = document.getElementById('nome-editora').value;
-  const valorAluguel = document.getElementById('valor-aluguel').value;
   const idadeMinima = document.getElementById('idade-minima').value;
   const valorDiaria = document.getElementById('valor-diaria').value;
 
@@ -39,14 +39,19 @@ if (
     minimoJogadores == "" || 
     maximoJogadores == "" ||
     tipoJogo == "" || 
-    nomeEditora == "" || 
-    valorAluguel == "" || 
+    nomeEditora == "" ||  
     idadeMinima == "" || 
     valorDiaria == ""
+
   ) {
       alert("Por favor, preencha todos os campos do formulário");
       return; 
   }
+
+    let idGenero = null;
+    if (generoSelecionado != "") {
+        idGenero = Number(generoSelecionado);
+    }
 
   const novoJogo = {
     nome: nomeJogo,
@@ -56,7 +61,8 @@ if (
     max_jogadores: Number(maximoJogadores),
     idade_min: Number(idadeMinima),
     valor_aluguel_diaria: Number(valorDiaria),
-    fk_tipo_jogo: Number(tipoJogo) 
+    fk_tipo_jogo: Number(tipoJogo),
+    id_genero: idGenero
   };
 
 const dadosParaJava = JSON.stringify(novoJogo); // transforma o obj js em uma string de texto formato json
@@ -81,7 +87,6 @@ fetch("http://localhost:8080/jogos", {
       document.getElementById('minimo-jogadores').value = "";
       document.getElementById('maximo-jogadores').value = "";
       document.getElementById('nome-editora').value = "";
-      document.getElementById('valor-aluguel').value = "";
       document.getElementById('idade-minima').value = "";
       document.getElementById('valor-diaria').value = "";
 
@@ -115,6 +120,27 @@ function carregarTipos() {
         })
         .catch(function(erro) {
             console.error("Erro ao carregar os tipos:", erro);
+        });
+}
+
+//buscar generos 
+function carregarGeneros() {
+    fetch("http://localhost:8080/jogos/generos")
+        .then(function(resposta) {
+            return resposta.json();
+        })
+        .then(function(generos) {
+            const select = document.getElementById("selecionar-genero");
+            select.innerHTML = "";
+
+            // percorre todos os generos vindos do banco
+            for (let i = 0; i < generos.length; i++) {
+                const genero = generos[i];
+                select.innerHTML += '<option value="' + genero.id_genero + '">' + genero.nome + '</option>';
+            }
+        })
+        .catch(function(erro) {
+            console.error("Erro ao carregar os generos:", erro);
         });
 }
 
@@ -289,6 +315,7 @@ if (inputPesquisa) {
 
 window.onload = function() {
     carregarTipos(); 
+    carregarGeneros();
     carregarJogos(); 
 };
 
