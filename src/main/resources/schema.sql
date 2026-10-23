@@ -1,4 +1,33 @@
 
+
+
+
+CREATE TABLE cliente (
+    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+    nome varchar(120),
+    cpf char(11),
+    data_nascimento date,
+    email varchar(120),
+    telefone varchar(20),
+    senha varchar(255),
+    logradouro varchar(200),
+    bairro varchar(80),
+    cidade varchar(80),
+    termo_aceito_em date, -- nao existe dateime no h2, tive q colocar date --
+    token_recuperacao varchar(100),
+    token_expira_em date
+);
+
+create table usuario (
+    id_usuario int auto_increment primary key,
+    nome varchar(120),
+    email varchar(120),
+    senha varchar(255),
+    cargo varchar(20),
+    ativo int -- nao existe tinyint no h2, tive q colocar int --
+);
+
+
 CREATE TABLE genero (
     id_genero INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(60) NOT NULL,
