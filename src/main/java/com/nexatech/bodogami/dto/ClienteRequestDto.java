@@ -3,6 +3,9 @@ package com.nexatech.bodogami.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 
@@ -14,12 +17,14 @@ public class ClienteRequestDto {
 
     @NotBlank
     @Size(min = 11, max = 11)
+    @Pattern(regexp = "\\d{11}", message = "O CPF deve conter 11 números")
     private String cpf;
 
     @NotNull
     private LocalDate dataNascimento;
 
     @NotBlank
+    @Email(message = "Informe um e-mail válido")
     @Size(max = 120)
     private String email;
 
@@ -42,6 +47,10 @@ public class ClienteRequestDto {
     @NotBlank
     @Size(max = 80)
     private String cidade;
+
+    @NotNull
+    @AssertTrue(message = "É necessário aceitar o termo de locação")
+    private Boolean aceitouTermo;
 
     public String getNome() {
         return nome;
@@ -113,5 +122,13 @@ public class ClienteRequestDto {
 
     public void setCidade(String cidade) {
         this.cidade = cidade;
+    }
+
+    public Boolean getAceitouTermo() {
+        return aceitouTermo;
+    }
+
+    public void setAceitouTermo(Boolean aceitouTermo) {
+        this.aceitouTermo = aceitouTermo;
     }
 }
