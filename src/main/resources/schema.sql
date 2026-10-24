@@ -24,7 +24,7 @@ create table usuario (
     email varchar(120),
     senha varchar(255),
     cargo varchar(20),
-    ativo int -- nao existe tinyint no h2, tive q colocar int --
+    ativo int -- nao existe tinyint no h2, tive q colocar int  --
 );
 
 
