@@ -1,4 +1,4 @@
-package com.nexatech.bodogami;
+package com.nexatech.bodogami.entity;
 
 public class Genero {
     private Integer id_genero;

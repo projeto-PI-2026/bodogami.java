@@ -1,4 +1,4 @@
-package com.nexatech.bodogami;
+package com.nexatech.bodogami.entity;
 
 public class TipoJogo {
     private Integer id_tipo_jogo;

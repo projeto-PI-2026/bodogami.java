@@ -1,5 +1,8 @@
-package com.nexatech.bodogami;
+package com.nexatech.bodogami.controller;
 
+import com.nexatech.bodogami.entity.Genero;
+import com.nexatech.bodogami.entity.Jogo;
+import com.nexatech.bodogami.entity.TipoJogo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
