@@ -1,7 +1,7 @@
 package com.nexatech.bodogami.controller;
 
-import com.nexatech.bodogami.dto.ClienteRequestDto;
-import com.nexatech.bodogami.dto.ClienteResponseDto;
+import com.nexatech.bodogami.dto.Cliente.ClienteRequestDto;
+import com.nexatech.bodogami.dto.Cliente.ClienteResponseDto;
 import com.nexatech.bodogami.service.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

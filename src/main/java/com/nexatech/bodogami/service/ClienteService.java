@@ -1,7 +1,7 @@
 package com.nexatech.bodogami.service;
 
-import com.nexatech.bodogami.dto.ClienteRequestDto;
-import com.nexatech.bodogami.dto.ClienteResponseDto;
+import com.nexatech.bodogami.dto.Cliente.ClienteRequestDto;
+import com.nexatech.bodogami.dto.Cliente.ClienteResponseDto;
 import com.nexatech.bodogami.entity.Cliente;
 import com.nexatech.bodogami.repository.ClienteRepository;
 import org.springframework.http.HttpStatus;
@@ -31,7 +31,6 @@ public class ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
-    // conta gigante pra validar o cpf
     private boolean cpfValido(String cpf) {
 
         if (cpf == null || !cpf.matches("\\d{11}")) {
@@ -69,6 +68,8 @@ public class ClienteService {
 
     public ClienteResponseDto cadastrar(ClienteRequestDto dto) {
 
+        String cpf = dto.getCpf() == null ? null : dto.getCpf().replaceAll("\\D", "");
+
         LocalDate hoje = LocalDate.now();
         LocalDate nascimento = dto.getDataNascimento();
 
@@ -85,14 +86,14 @@ public class ClienteService {
             );
         }
 
-        if (!cpfValido(dto.getCpf())) {
+        if (!cpfValido(cpf)) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     "CPF inválido"
             );
         }
 
-        if (clienteRepository.existsByCpf(dto.getCpf())) {
+        if (clienteRepository.existsByCpf(cpf)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "CPF já cadastrado");
         }
 
@@ -107,7 +108,7 @@ public class ClienteService {
         Cliente cliente = new Cliente();
 
         cliente.setNome(dto.getNome());
-        cliente.setCpf(dto.getCpf());
+        cliente.setCpf(cpf);
         cliente.setDataNascimento(dto.getDataNascimento());
         cliente.setEmail(dto.getEmail());
         cliente.setTelefone(dto.getTelefone());

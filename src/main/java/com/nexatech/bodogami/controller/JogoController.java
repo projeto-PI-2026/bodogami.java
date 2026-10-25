@@ -1,14 +1,13 @@
 package com.nexatech.bodogami.controller;
 
+import com.nexatech.bodogami.dto.Jogo.GeneroResponseDto;
 import com.nexatech.bodogami.dto.Jogo.JogoRequestDto;
 import com.nexatech.bodogami.dto.Jogo.JogoResponseDto;
-import com.nexatech.bodogami.entity.Genero;
+import com.nexatech.bodogami.dto.Jogo.TipoJogoResponseDto;
 import com.nexatech.bodogami.entity.Jogo;
-import com.nexatech.bodogami.entity.TipoJogo;
 import com.nexatech.bodogami.mapper.JogoMapper;
 import com.nexatech.bodogami.service.JogoService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -49,17 +48,25 @@ public class JogoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<JogoResponseDto> buscarPorId(@PathVariable Integer id) {
+        Jogo jogo = jogoService.buscarPorId(id);
+        return ResponseEntity.status(200).body(JogoMapper.toResponse(jogo));
     }
 
-    public ResponseEntity<List<Genero>> listarGeneros() {
-        return ResponseEntity.status(200).body(jogoService.listarGeneros());
+    @GetMapping("/tipos")
+    public ResponseEntity<List<TipoJogoResponseDto>> listarTipos() {
+        return ResponseEntity.status(200).body(JogoMapper.toTipoJogoResponse(jogoService.listarTipos()));
+    }
+
+    @GetMapping("/generos")
+    public ResponseEntity<List<GeneroResponseDto>> listarGeneros() {
+        return ResponseEntity.status(200).body(JogoMapper.toGeneroResponse(jogoService.listarGeneros()));
     }
 
     @PostMapping
     public ResponseEntity<JogoResponseDto> criar(@RequestBody @Valid JogoRequestDto request) {
         Jogo jogo = JogoMapper.toEntity(request);
         Jogo jogoCriado = jogoService.criar(jogo);
-        return ResponseEntity.status(200).body(JogoMapper.toResponse(jogoCriado));
+        return ResponseEntity.status(201).body(JogoMapper.toResponse(jogoCriado));
     }
 
     @PutMapping("/{id}")
@@ -67,6 +74,12 @@ public class JogoController {
         Jogo jogo = JogoMapper.toEntity(request);
         Jogo jogoAtualizado = jogoService.atualizar(id, jogo);
         return ResponseEntity.status(200).body(JogoMapper.toResponse(jogoAtualizado));
+    }
+
+    @PostMapping("/{id}/adicionar")
+    public ResponseEntity<Void> adicionarExemplar(@PathVariable Integer id) {
+        jogoService.adicionarExemplar(id);
+        return ResponseEntity.status(200).build();
     }
 
     @DeleteMapping("/{id}/remover")

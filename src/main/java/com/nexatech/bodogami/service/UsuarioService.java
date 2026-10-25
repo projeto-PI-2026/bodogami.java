@@ -1,12 +1,14 @@
 package com.nexatech.bodogami.service;
 
-import com.nexatech.bodogami.dto.UsuarioRequestDto;
-import com.nexatech.bodogami.dto.UsuarioResponseDto;
+import com.nexatech.bodogami.dto.Usuario.UsuarioRequestDto;
+import com.nexatech.bodogami.dto.Usuario.UsuarioResponseDto;
 import com.nexatech.bodogami.entity.Usuario;
 import com.nexatech.bodogami.mapper.UsuarioMapper;
 import com.nexatech.bodogami.repository.UsuarioRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UsuarioService {
@@ -26,7 +28,7 @@ public class UsuarioService {
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
 
         if (usuarioRepository.existsByEmail(dto.getEmail())) {
-            throw new IllegalArgumentException("Email já cadastrado");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email já cadastrado");
         }
 
         Usuario usuarioSalvo = usuarioRepository.save(usuario);

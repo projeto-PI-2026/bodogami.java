@@ -13,6 +13,7 @@ import com.nexatech.bodogami.repository.JogoRepository;
 import com.nexatech.bodogami.repository.TipoJogoRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,6 +104,19 @@ public class JogoService {
     public void deletar(Integer id) {
         Jogo jogo = buscarPorId(id);
         jogoRepository.delete(jogo);
+    }
+
+    public void adicionarExemplar(Integer idJogo) {
+        Jogo jogo = buscarPorId(idJogo);
+
+        Exemplar exemplar = new Exemplar();
+        exemplar.setCodigoJogo("DEFAULT");
+        exemplar.setEstadoConservacao("Novo");
+        exemplar.setStatus("Disponível");
+        exemplar.setDataAquisicao(LocalDateTime.now());
+        exemplar.setJogo(jogo);
+
+        exemplarRepository.save(exemplar);
     }
 
     public void removerExemplar(Integer idJogo) {

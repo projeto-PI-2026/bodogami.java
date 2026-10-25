@@ -16,8 +16,8 @@ public class ClienteRequestDto {
     private String nome;
 
     @NotBlank
-    @Size(min = 11, max = 11)
-    @Pattern(regexp = "\\d{11}", message = "O CPF deve conter 11 números")
+    @Size(min = 11, max = 14)
+    @Pattern(regexp = "\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}", message = "O CPF deve conter 11 números")
     private String cpf;
 
     @NotNull

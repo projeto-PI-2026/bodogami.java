@@ -51,6 +51,9 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
+                        // dispatch interno de erros (400, 404, 409...)
+                        .requestMatchers("/error").permitAll()
+
                         // login e logout
                         .requestMatchers(
                                 "/clientes/login",
@@ -68,6 +71,9 @@ public class SecurityConfig {
 
                         // console H2 para desenvolvimento
                         .requestMatchers("/h2-console/**").permitAll()
+
+                        // acervo de jogos: público, como o cadastro de cliente/usuário
+                        .requestMatchers("/jogos/**").permitAll()
 
                         // rotas exclusivas de cada tipo de conta
                         .requestMatchers("/clientes/**").hasRole("CLIENTE")

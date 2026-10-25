@@ -1,9 +1,9 @@
 package com.nexatech.bodogami.controller;
 
-import com.nexatech.bodogami.dto.UsuarioRequestDto;
-import com.nexatech.bodogami.dto.UsuarioResponseDto;
+import com.nexatech.bodogami.dto.Usuario.UsuarioRequestDto;
+import com.nexatech.bodogami.dto.Usuario.UsuarioResponseDto;
 import com.nexatech.bodogami.service.UsuarioService;
-import org.springframework.http.HttpStatus;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +18,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioResponseDto> cadastrar(@RequestBody UsuarioRequestDto dto) {
+    public ResponseEntity<UsuarioResponseDto> cadastrar(@Valid @RequestBody UsuarioRequestDto dto) {
 
         UsuarioResponseDto resposta = usuarioService.cadastrar(dto);
 

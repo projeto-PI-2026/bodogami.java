@@ -1,7 +1,9 @@
 package com.nexatech.bodogami.mapper;
 
+import com.nexatech.bodogami.dto.Jogo.GeneroResponseDto;
 import com.nexatech.bodogami.dto.Jogo.JogoRequestDto;
 import com.nexatech.bodogami.dto.Jogo.JogoResponseDto;
+import com.nexatech.bodogami.dto.Jogo.TipoJogoResponseDto;
 import com.nexatech.bodogami.entity.Genero;
 import com.nexatech.bodogami.entity.Jogo;
 import com.nexatech.bodogami.entity.TipoJogo;
@@ -78,6 +80,52 @@ public class JogoMapper {
 
         return jogos.stream()
                 .map(JogoMapper::toResponse)
+                .toList();
+    }
+
+    public static TipoJogoResponseDto toTipoJogoResponse(TipoJogo tipoJogo) {
+        if (tipoJogo == null) {
+            return null;
+        }
+
+        TipoJogoResponseDto response = new TipoJogoResponseDto();
+        response.setId_tipo_jogo(tipoJogo.getId());
+        response.setNome_tipo(tipoJogo.getNome_tipo());
+        response.setDescricao(tipoJogo.getDescricao());
+
+        return response;
+    }
+
+    public static List<TipoJogoResponseDto> toTipoJogoResponse(List<TipoJogo> tipos) {
+        if (tipos == null) {
+            return null;
+        }
+
+        return tipos.stream()
+                .map(JogoMapper::toTipoJogoResponse)
+                .toList();
+    }
+
+    public static GeneroResponseDto toGeneroResponse(Genero genero) {
+        if (genero == null) {
+            return null;
+        }
+
+        GeneroResponseDto response = new GeneroResponseDto();
+        response.setId_genero(genero.getId());
+        response.setNome(genero.getNome());
+        response.setDescricao(genero.getDescricao());
+
+        return response;
+    }
+
+    public static List<GeneroResponseDto> toGeneroResponse(List<Genero> generos) {
+        if (generos == null) {
+            return null;
+        }
+
+        return generos.stream()
+                .map(JogoMapper::toGeneroResponse)
                 .toList();
     }
 }
