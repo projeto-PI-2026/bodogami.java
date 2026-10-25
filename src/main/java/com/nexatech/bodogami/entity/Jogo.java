@@ -1,50 +1,63 @@
 package com.nexatech.bodogami.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
 public class Jogo {
-    private Integer id_jogo;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @ManyToOne
+    private TipoJogo tipoJogo;
+
+    @ManyToMany
+    private List<Genero> generos = new ArrayList<>();
+
     private String nome;
     private String descricao;
     private String editora;
-    private Double valor_aluguel_diaria;
-    private String imagem_url;
-    private Integer min_jogadores;
-    private Integer max_jogadores;
-    private Integer idade_min;
+    private Double valorAluguelDiaria;
+    private String imagemUrl;
+    private Integer minJogadores;
+    private Integer maxJogadores;
+    private Integer idadeMin;
+
+    @Transient
     private Integer quantidade;
-    private Integer id_genero;
-    private Integer fk_tipo_jogo;
-    private String nomeTipo;
-    private String nomeGenero;
 
-    public Jogo (Integer id_jogo, String nome, String descricao, String editora,
-                Double valor_aluguel_diaria, String imagem_url, Integer min_jogadores,
-                Integer max_jogadores, Integer idade_min, Integer quantidade, Integer id_genero,
-                Integer fk_tipo_jogo, String nomeTipo, String nomeGenero) {
-        this.id_jogo = id_jogo;
-        this.nome = nome;
-        this.descricao = descricao;
-        this.editora = editora;
-        this.valor_aluguel_diaria = valor_aluguel_diaria;
-        this.imagem_url = imagem_url;
-        this.min_jogadores = min_jogadores;
-        this.max_jogadores = max_jogadores;
-        this.idade_min = idade_min;
-        this.quantidade = quantidade;
-        this.id_genero = id_genero;
-        this.fk_tipo_jogo = fk_tipo_jogo;
-        this.nomeTipo = nomeTipo;
-        this.nomeGenero = nomeGenero;
+    public Integer getId() {
+        return id;
     }
 
-    public Jogo() {
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getId_jogo() {
-        return id_jogo;
+    public TipoJogo getTipoJogo() {
+        return tipoJogo;
     }
 
-    public void setId_jogo(Integer id_jogo) {
-        this.id_jogo = id_jogo;
+    public void setTipoJogo(TipoJogo tipoJogo) {
+        this.tipoJogo = tipoJogo;
+    }
+
+    public List<Genero> getGeneros() {
+        return generos;
+    }
+
+    public void setGeneros(List<Genero> generos) {
+        this.generos = generos;
     }
 
     public String getNome() {
@@ -71,44 +84,44 @@ public class Jogo {
         this.editora = editora;
     }
 
-    public Double getValor_aluguel_diaria() {
-        return valor_aluguel_diaria;
+    public Double getValorAluguelDiaria() {
+        return valorAluguelDiaria;
     }
 
-    public void setValor_aluguel_diaria(Double valor_aluguel_diaria) {
-        this.valor_aluguel_diaria = valor_aluguel_diaria;
+    public void setValorAluguelDiaria(Double valorAluguelDiaria) {
+        this.valorAluguelDiaria = valorAluguelDiaria;
     }
 
-    public String getImagem_url() {
-        return imagem_url;
+    public String getImagemUrl() {
+        return imagemUrl;
     }
 
-    public void setImagem_url(String imagem_url) {
-        this.imagem_url = imagem_url;
+    public void setImagemUrl(String imagemUrl) {
+        this.imagemUrl = imagemUrl;
     }
 
-    public Integer getMin_jogadores() {
-        return min_jogadores;
+    public Integer getMinJogadores() {
+        return minJogadores;
     }
 
-    public void setMin_jogadores(Integer min_jogadores) {
-        this.min_jogadores = min_jogadores;
+    public void setMinJogadores(Integer minJogadores) {
+        this.minJogadores = minJogadores;
     }
 
-    public Integer getMax_jogadores() {
-        return max_jogadores;
+    public Integer getMaxJogadores() {
+        return maxJogadores;
     }
 
-    public void setMax_jogadores(Integer max_jogadores) {
-        this.max_jogadores = max_jogadores;
+    public void setMaxJogadores(Integer maxJogadores) {
+        this.maxJogadores = maxJogadores;
     }
 
-    public Integer getIdade_min() {
-        return idade_min;
+    public Integer getIdadeMin() {
+        return idadeMin;
     }
 
-    public void setIdade_min(Integer idade_min) {
-        this.idade_min = idade_min;
+    public void setIdadeMin(Integer idadeMin) {
+        this.idadeMin = idadeMin;
     }
 
     public Integer getQuantidade() {
@@ -117,37 +130,5 @@ public class Jogo {
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
-    }
-
-    public Integer getId_genero() {
-        return id_genero;
-    }
-
-    public void setId_genero(Integer id_genero) {
-        this.id_genero = id_genero;
-    }
-
-    public Integer getFk_tipo_jogo() {
-        return fk_tipo_jogo;
-    }
-
-    public void setFk_tipo_jogo(Integer fk_tipo_jogo) {
-        this.fk_tipo_jogo = fk_tipo_jogo;
-    }
-
-    public String getNomeTipo() {
-        return nomeTipo;
-    }
-
-    public void setNomeTipo(String nomeTipo) {
-        this.nomeTipo = nomeTipo;
-    }
-
-    public String getNomeGenero() {
-        return nomeGenero;
-    }
-
-    public void setNomeGenero(String nomeGenero) {
-        this.nomeGenero = nomeGenero;
     }
 }

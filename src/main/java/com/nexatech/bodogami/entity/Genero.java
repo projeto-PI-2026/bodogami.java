@@ -1,12 +1,22 @@
 package com.nexatech.bodogami.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Genero {
-    private Integer id_genero;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     private String nome;
     private String descricao;
 
-    public Genero(Integer id_genero, String nome, String descricao) {
-        this.id_genero = id_genero;
+    public Genero(Integer id, String nome, String descricao) {
+        this.id = id;
         this.nome = nome;
         this.descricao = descricao;
     }
@@ -14,12 +24,12 @@ public class Genero {
     public Genero() {
     }
 
-    public Integer getId_genero() {
-        return id_genero;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId_genero(Integer id_genero) {
-        this.id_genero = id_genero;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome() {
