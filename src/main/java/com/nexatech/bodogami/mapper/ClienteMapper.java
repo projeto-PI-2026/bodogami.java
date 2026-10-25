@@ -1,8 +1,8 @@
 package com.nexatech.bodogami.mapper;
 
 import java.util.List;
-import com.nexatech.bodogami.dto.ClienteRequestDto;
-import com.nexatech.bodogami.dto.ClienteResponseDto;
+import com.nexatech.bodogami.dto.Cliente.ClienteRequestDto;
+import com.nexatech.bodogami.dto.Cliente.ClienteResponseDto;
 import com.nexatech.bodogami.entity.Cliente;
 import org.springframework.stereotype.Component;
 

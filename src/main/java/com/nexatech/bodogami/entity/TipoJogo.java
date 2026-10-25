@@ -1,24 +1,35 @@
-package com.nexatech.bodogami;
+package com.nexatech.bodogami.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class TipoJogo {
-    private Integer id_tipo_jogo;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     private String nome_tipo;
+
     private String descricao;
 
-    public TipoJogo(Integer id_tipo_jogo, String nome_tipo, String descricao) {
-        this.id_tipo_jogo = id_tipo_jogo;
+    public TipoJogo(Integer id, String nome_tipo, String descricao) {
+        this.id = id;
         this.nome_tipo = nome_tipo;
         this.descricao = descricao;
     }
 
     public TipoJogo() {}
 
-    public Integer getId_tipo_jogo() {
-        return id_tipo_jogo;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId_tipo_jogo(Integer id_tipo_jogo) {
-        this.id_tipo_jogo = id_tipo_jogo;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome_tipo() {

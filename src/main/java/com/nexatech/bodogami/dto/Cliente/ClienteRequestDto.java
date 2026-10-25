@@ -1,4 +1,4 @@
-package com.nexatech.bodogami.dto;
+package com.nexatech.bodogami.dto.Cliente;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
