@@ -9,6 +9,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.nexatech.bodogami.config.GerenciadorTokenJwt;
+import com.nexatech.bodogami.dto.LoginRequestDto;
+
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.Period;
@@ -16,12 +19,15 @@ import java.time.Period;
 @Service
 public class ClienteService {
 
+    private final GerenciadorTokenJwt gerenciadorTokenJwt;
+
     private final ClienteRepository clienteRepository;
 
     private final BCryptPasswordEncoder passwordEncoder =
             new BCryptPasswordEncoder();
 
-    public ClienteService(ClienteRepository clienteRepository) {
+    public ClienteService(GerenciadorTokenJwt gerenciadorTokenJwt, ClienteRepository clienteRepository) {
+        this.gerenciadorTokenJwt = gerenciadorTokenJwt;
         this.clienteRepository = clienteRepository;
     }
 
@@ -128,5 +134,27 @@ public class ClienteService {
         resposta.setTermoAceitoEm(clienteSalvo.getTermoAceitoEm());
 
         return resposta;
+    }
+
+    public String login(LoginRequestDto dto) {
+
+        Cliente cliente = clienteRepository.findByEmail(dto.getEmail())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.UNAUTHORIZED,
+                        "E-mail ou senha incorretos"
+                ));
+
+        if (!passwordEncoder.matches(dto.getSenha(), cliente.getSenha())) {
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED,
+                    "E-mail ou senha incorretos"
+            );
+        }
+
+        return gerenciadorTokenJwt.gerarToken(
+                cliente.getId(),
+                cliente.getEmail(),
+                "CLIENTE"
+        );
     }
 }

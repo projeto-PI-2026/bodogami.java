@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.nexatech.bodogami.dto.LoginRequestDto;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
@@ -26,4 +29,5 @@ public class ClienteController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(resposta);
     }
+
 }
