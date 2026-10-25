@@ -45,6 +45,7 @@ public class AuthService {
         String token = gerenciadorTokenJwt.gerarToken(cliente.getId(), cliente.getEmail(), "CLIENTE");
 
         LoginResponseDto resposta = new LoginResponseDto(cliente.getId(), cliente.getNome(), cliente.getEmail(), "CLIENTE");
+        resposta.setToken(token);
 
         return new LoginResultado(token, resposta);
     }
@@ -68,6 +69,7 @@ public class AuthService {
         String token = gerenciadorTokenJwt.gerarToken(usuario.getId(), usuario.getEmail(), "USUARIO");
 
         LoginResponseDto resposta = new LoginResponseDto(usuario.getId(), usuario.getNome(), usuario.getEmail(), "USUARIO");
+        resposta.setToken(token);
 
         return new LoginResultado(token, resposta);
     }

@@ -72,8 +72,24 @@ public class SecurityConfig {
                         // console H2 para desenvolvimento
                         .requestMatchers("/h2-console/**").permitAll()
 
-                        // acervo de jogos: público, como o cadastro de cliente/usuário
-                        .requestMatchers("/jogos/**").permitAll()
+                        // documentação (Swagger / OpenAPI)
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
+                                "/configuration/ui",
+                                "/configuration/security",
+                                "/webjars/**",
+                                "/v3/api-docs/**"
+                        ).permitAll()
+
+                        // catálogo de jogos (leitura): público
+                        .requestMatchers(HttpMethod.GET, "/jogos/**").permitAll()
+
+                        // gestão do acervo (escrita): somente funcionário
+                        .requestMatchers(HttpMethod.POST, "/jogos/**").hasRole("USUARIO")
+                        .requestMatchers(HttpMethod.PUT, "/jogos/**").hasRole("USUARIO")
+                        .requestMatchers(HttpMethod.DELETE, "/jogos/**").hasRole("USUARIO")
 
                         // rotas exclusivas de cada tipo de conta
                         .requestMatchers("/clientes/**").hasRole("CLIENTE")

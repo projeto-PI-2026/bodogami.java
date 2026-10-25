@@ -6,6 +6,7 @@ public class LoginResponseDto {
     private String nome;
     private String email;
     private String tipo;
+    private String token;
 
     public LoginResponseDto(
             Integer id,
@@ -33,5 +34,13 @@ public class LoginResponseDto {
 
     public String getTipo() {
         return tipo;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
