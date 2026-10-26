@@ -86,10 +86,10 @@ public class SecurityConfig {
                         // catálogo de jogos (leitura): público
                         .requestMatchers(HttpMethod.GET, "/jogos/**").permitAll()
 
-                        // gestão do acervo (escrita): somente funcionário
-                        .requestMatchers(HttpMethod.POST, "/jogos/**").hasRole("USUARIO")
-                        .requestMatchers(HttpMethod.PUT, "/jogos/**").hasRole("USUARIO")
-                        .requestMatchers(HttpMethod.DELETE, "/jogos/**").hasRole("USUARIO")
+                        // gestão do acervo (escrita): funcionário ou cliente
+                        .requestMatchers(HttpMethod.POST, "/jogos/**").hasAnyRole("USUARIO", "CLIENTE")
+                        .requestMatchers(HttpMethod.PUT, "/jogos/**").hasAnyRole("USUARIO", "CLIENTE")
+                        .requestMatchers(HttpMethod.DELETE, "/jogos/**").hasAnyRole("USUARIO", "CLIENTE")
 
                         // rotas exclusivas de cada tipo de conta
                         .requestMatchers("/clientes/**").hasRole("CLIENTE")

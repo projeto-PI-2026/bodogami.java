@@ -94,11 +94,11 @@ public class JogoController {
 
     @PostMapping
     @SecurityRequirement(name = "Bearer")
-    @Operation(summary = "Cadastrar um jogo", description = "Cria um novo jogo no acervo. Requer login de funcionário (ROLE_USUARIO)")
+    @Operation(summary = "Cadastrar um jogo", description = "Cria um novo jogo no acervo. Requer login de funcionário (ROLE_USUARIO) ou cliente (ROLE_CLIENTE)")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Jogo criado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos (tipo/gênero inexistente ou mínimo maior que máximo)"),
-            @ApiResponse(responseCode = "403", description = "Não autenticado como funcionário")
+            @ApiResponse(responseCode = "403", description = "Não autenticado como funcionário ou cliente")
     })
     public ResponseEntity<JogoResponseDto> criar(@RequestBody @Valid JogoRequestDto request) {
         Jogo jogo = JogoMapper.toEntity(request);
@@ -108,11 +108,11 @@ public class JogoController {
 
     @PutMapping("/{id}")
     @SecurityRequirement(name = "Bearer")
-    @Operation(summary = "Atualizar um jogo", description = "Altera os dados de um jogo existente. Requer login de funcionário (ROLE_USUARIO)")
+    @Operation(summary = "Atualizar um jogo", description = "Altera os dados de um jogo existente. Requer login de funcionário (ROLE_USUARIO) ou cliente (ROLE_CLIENTE)")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Jogo atualizado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos"),
-            @ApiResponse(responseCode = "403", description = "Não autenticado como funcionário"),
+            @ApiResponse(responseCode = "403", description = "Não autenticado como funcionário ou cliente"),
             @ApiResponse(responseCode = "404", description = "Jogo não encontrado")
     })
     public ResponseEntity<JogoResponseDto> atualizar(
@@ -126,10 +126,10 @@ public class JogoController {
 
     @PostMapping("/{id}/adicionar")
     @SecurityRequirement(name = "Bearer")
-    @Operation(summary = "Adicionar um exemplar", description = "Adiciona uma unidade física do jogo ao estoque. Requer login de funcionário (ROLE_USUARIO)")
+    @Operation(summary = "Adicionar um exemplar", description = "Adiciona uma unidade física do jogo ao estoque. Requer login de funcionário (ROLE_USUARIO) ou cliente (ROLE_CLIENTE)")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Exemplar adicionado"),
-            @ApiResponse(responseCode = "403", description = "Não autenticado como funcionário"),
+            @ApiResponse(responseCode = "403", description = "Não autenticado como funcionário ou cliente"),
             @ApiResponse(responseCode = "404", description = "Jogo não encontrado")
     })
     public ResponseEntity<Void> adicionarExemplar(
@@ -141,10 +141,10 @@ public class JogoController {
 
     @DeleteMapping("/{id}/remover")
     @SecurityRequirement(name = "Bearer")
-    @Operation(summary = "Remover um exemplar", description = "Remove uma unidade física do jogo do estoque. Requer login de funcionário (ROLE_USUARIO)")
+    @Operation(summary = "Remover um exemplar", description = "Remove uma unidade física do jogo do estoque. Requer login de funcionário (ROLE_USUARIO) ou cliente (ROLE_CLIENTE)")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Exemplar removido"),
-            @ApiResponse(responseCode = "403", description = "Não autenticado como funcionário"),
+            @ApiResponse(responseCode = "403", description = "Não autenticado como funcionário ou cliente"),
             @ApiResponse(responseCode = "404", description = "Jogo sem exemplares ou não encontrado")
     })
     public ResponseEntity<Void> removerExemplar(
@@ -156,10 +156,10 @@ public class JogoController {
 
     @DeleteMapping("/{id}")
     @SecurityRequirement(name = "Bearer")
-    @Operation(summary = "Deletar um jogo", description = "Remove o jogo e todos os seus exemplares do acervo. Requer login de funcionário (ROLE_USUARIO)")
+    @Operation(summary = "Deletar um jogo", description = "Remove o jogo e todos os seus exemplares do acervo. Requer login de funcionário (ROLE_USUARIO) ou cliente (ROLE_CLIENTE)")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Jogo deletado"),
-            @ApiResponse(responseCode = "403", description = "Não autenticado como funcionário"),
+            @ApiResponse(responseCode = "403", description = "Não autenticado como funcionário ou cliente"),
             @ApiResponse(responseCode = "404", description = "Jogo não encontrado")
     })
     public ResponseEntity<Void> deletar(
