@@ -31,41 +31,6 @@ public class ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
-    private boolean cpfValido(String cpf) {
-
-        if (cpf == null || !cpf.matches("\\d{11}")) {
-            return false;
-        }
-
-        if (cpf.matches("(\\d)\\1{10}")) {
-            return false;
-        }
-
-        int soma = 0;
-
-        for (int i = 0; i < 9; i++) {
-            soma += Character.getNumericValue(cpf.charAt(i)) * (10 - i);
-        }
-
-        int resto = soma % 11;
-        int primeiroDigito = resto < 2 ? 0 : 11 - resto;
-
-        if (Character.getNumericValue(cpf.charAt(9)) != primeiroDigito) {
-            return false;
-        }
-
-        soma = 0;
-
-        for (int i = 0; i < 10; i++) {
-            soma += Character.getNumericValue(cpf.charAt(i)) * (11 - i);
-        }
-
-        resto = soma % 11;
-        int segundoDigito = resto < 2 ? 0 : 11 - resto;
-
-        return Character.getNumericValue(cpf.charAt(10)) == segundoDigito;
-    }
-
     public ClienteResponseDto cadastrar(ClienteRequestDto dto) {
 
         String cpf = dto.getCpf() == null ? null : dto.getCpf().replaceAll("\\D", "");
@@ -83,13 +48,6 @@ public class ClienteService {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     "O cliente deve ter pelo menos 18 anos"
-            );
-        }
-
-        if (!cpfValido(cpf)) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "CPF inválido"
             );
         }
 

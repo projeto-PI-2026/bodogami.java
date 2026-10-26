@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 
@@ -16,8 +15,6 @@ public class ClienteRequestDto {
     private String nome;
 
     @NotBlank
-    @Size(min = 11, max = 14)
-    @Pattern(regexp = "\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}", message = "O CPF deve conter 11 números")
     private String cpf;
 
     @NotNull
