@@ -3,10 +3,12 @@ package com.nexatech.bodogami.service;
 import com.nexatech.bodogami.config.GerenciadorTokenJwt;
 import com.nexatech.bodogami.dto.LoginRequestDto;
 import com.nexatech.bodogami.dto.LoginResponseDto;
+import com.nexatech.bodogami.dto.LoginResultadoDto;
 import com.nexatech.bodogami.entity.Cliente;
 import com.nexatech.bodogami.entity.Usuario;
 import com.nexatech.bodogami.repository.ClienteRepository;
 import com.nexatech.bodogami.repository.UsuarioRepository;
+import com.nexatech.bodogami.service.strategy.AuthServiceStrategy;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
-public class AuthService {
+public class AuthService implements AuthServiceStrategy {
 
     private final ClienteRepository clienteRepository;
     private final UsuarioRepository usuarioRepository;
@@ -28,7 +30,7 @@ public class AuthService {
         this.gerenciadorTokenJwt = gerenciadorTokenJwt;
     }
 
-    public LoginResultado loginCliente(LoginRequestDto dto) {
+    public LoginResultadoDto loginCliente(LoginRequestDto dto) {
 
         Cliente cliente = clienteRepository.findByEmail(dto.getEmail()).orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.UNAUTHORIZED,
@@ -47,10 +49,10 @@ public class AuthService {
         LoginResponseDto resposta = new LoginResponseDto(cliente.getId(), cliente.getNome(), cliente.getEmail(), "CLIENTE");
         resposta.setToken(token);
 
-        return new LoginResultado(token, resposta);
+        return new LoginResultadoDto(token, resposta);
     }
 
-    public LoginResultado loginUsuario(LoginRequestDto dto) {
+    public LoginResultadoDto loginUsuario(LoginRequestDto dto) {
 
         Usuario usuario = usuarioRepository
                 .findByEmail(dto.getEmail())
@@ -71,9 +73,6 @@ public class AuthService {
         LoginResponseDto resposta = new LoginResponseDto(usuario.getId(), usuario.getNome(), usuario.getEmail(), "USUARIO");
         resposta.setToken(token);
 
-        return new LoginResultado(token, resposta);
-    }
-
-    public record LoginResultado(String token, LoginResponseDto resposta) {
+        return new LoginResultadoDto(token, resposta);
     }
 }

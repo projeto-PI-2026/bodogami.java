@@ -2,7 +2,7 @@ package com.nexatech.bodogami.controller;
 
 import com.nexatech.bodogami.dto.Usuario.UsuarioRequestDto;
 import com.nexatech.bodogami.dto.Usuario.UsuarioResponseDto;
-import com.nexatech.bodogami.service.UsuarioService;
+import com.nexatech.bodogami.service.strategy.UsuarioServiceStrategy;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Usuários", description = "Cadastro de usuários (funcionários) da locadora")
 public class UsuarioController {
 
-    private final UsuarioService usuarioService;
+    private final UsuarioServiceStrategy usuarioService;
 
-    public UsuarioController(UsuarioService usuarioService) {
+    public UsuarioController(UsuarioServiceStrategy usuarioService) {
         this.usuarioService = usuarioService;
     }
 

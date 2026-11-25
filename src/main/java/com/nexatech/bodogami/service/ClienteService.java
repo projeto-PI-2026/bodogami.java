@@ -4,6 +4,7 @@ import com.nexatech.bodogami.dto.Cliente.ClienteRequestDto;
 import com.nexatech.bodogami.dto.Cliente.ClienteResponseDto;
 import com.nexatech.bodogami.entity.Cliente;
 import com.nexatech.bodogami.repository.ClienteRepository;
+import com.nexatech.bodogami.service.strategy.ClienteServiceStrategy;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import java.time.LocalDate;
 import java.time.Period;
 
 @Service
-public class ClienteService {
+public class ClienteService implements ClienteServiceStrategy {
 
     private final GerenciadorTokenJwt gerenciadorTokenJwt;
 

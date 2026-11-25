@@ -6,7 +6,7 @@ import com.nexatech.bodogami.dto.Jogo.JogoResponseDto;
 import com.nexatech.bodogami.dto.Jogo.TipoJogoResponseDto;
 import com.nexatech.bodogami.entity.Jogo;
 import com.nexatech.bodogami.mapper.JogoMapper;
-import com.nexatech.bodogami.service.JogoService;
+import com.nexatech.bodogami.service.strategy.JogoServiceStrategy;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -32,9 +32,9 @@ import java.util.List;
 @Tag(name = "Jogos", description = "Cadastro e consulta do acervo de jogos de tabuleiro")
 public class JogoController {
 
-    private final JogoService jogoService;
+    private final JogoServiceStrategy jogoService;
 
-    public JogoController(JogoService jogoService) {
+    public JogoController(JogoServiceStrategy jogoService) {
         this.jogoService = jogoService;
     }
 

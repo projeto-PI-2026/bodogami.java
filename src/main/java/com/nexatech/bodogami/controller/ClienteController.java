@@ -2,7 +2,7 @@ package com.nexatech.bodogami.controller;
 
 import com.nexatech.bodogami.dto.Cliente.ClienteRequestDto;
 import com.nexatech.bodogami.dto.Cliente.ClienteResponseDto;
-import com.nexatech.bodogami.service.ClienteService;
+import com.nexatech.bodogami.service.strategy.ClienteServiceStrategy;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Clientes", description = "Cadastro de clientes da locadora")
 public class ClienteController {
 
-    private final ClienteService clienteService;
+    private final ClienteServiceStrategy clienteService;
 
-    public ClienteController(ClienteService clienteService) {
+    public ClienteController(ClienteServiceStrategy clienteService) {
         this.clienteService = clienteService;
     }
 

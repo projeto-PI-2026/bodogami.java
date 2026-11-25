@@ -5,13 +5,14 @@ import com.nexatech.bodogami.dto.Usuario.UsuarioResponseDto;
 import com.nexatech.bodogami.entity.Usuario;
 import com.nexatech.bodogami.mapper.UsuarioMapper;
 import com.nexatech.bodogami.repository.UsuarioRepository;
+import com.nexatech.bodogami.service.strategy.UsuarioServiceStrategy;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
-public class UsuarioService {
+public class UsuarioService implements UsuarioServiceStrategy {
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     private final UsuarioRepository usuarioRepository;

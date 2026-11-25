@@ -11,6 +11,7 @@ import com.nexatech.bodogami.repository.ExemplarRepository;
 import com.nexatech.bodogami.repository.GeneroRepository;
 import com.nexatech.bodogami.repository.JogoRepository;
 import com.nexatech.bodogami.repository.TipoJogoRepository;
+import com.nexatech.bodogami.service.strategy.JogoServiceStrategy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class JogoService {
+public class JogoService implements JogoServiceStrategy {
 
     private final JogoRepository jogoRepository;
     private final TipoJogoRepository tipoJogoRepository;

@@ -3,7 +3,7 @@ package com.nexatech.bodogami.controller;
 import com.nexatech.bodogami.config.GerenciadorTokenJwt;
 import com.nexatech.bodogami.dto.LoginRequestDto;
 import com.nexatech.bodogami.dto.LoginResponseDto;
-import com.nexatech.bodogami.service.AuthService;
+import com.nexatech.bodogami.service.strategy.AuthServiceStrategy;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -22,10 +22,10 @@ import java.time.Duration;
 @Tag(name = "Autenticação", description = "Login e logout de clientes e usuários (JWT em cookie)")
 public class AuthController {
 
-    private final AuthService authService;
+    private final AuthServiceStrategy authService;
     private final GerenciadorTokenJwt gerenciadorTokenJwt;
 
-    public AuthController(AuthService authService, GerenciadorTokenJwt gerenciadorTokenJwt) {
+    public AuthController(AuthServiceStrategy authService, GerenciadorTokenJwt gerenciadorTokenJwt) {
         this.authService = authService;
         this.gerenciadorTokenJwt = gerenciadorTokenJwt;
     }
