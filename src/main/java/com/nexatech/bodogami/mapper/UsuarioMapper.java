@@ -1,10 +1,12 @@
 package com.nexatech.bodogami.mapper;
 
 import java.util.List;
-import com.nexatech.bodogami.dto.UsuarioRequestDto;
-import com.nexatech.bodogami.dto.UsuarioResponseDto;
+import com.nexatech.bodogami.dto.Usuario.UsuarioRequestDto;
+import com.nexatech.bodogami.dto.Usuario.UsuarioResponseDto;
 import com.nexatech.bodogami.entity.Usuario;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UsuarioMapper {
 
     public static Usuario toEntity(UsuarioRequestDto dto) {

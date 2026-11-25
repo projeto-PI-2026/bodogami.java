@@ -5,6 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import java.time.LocalDateTime;
+
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,8 +21,12 @@ public class Cliente {
     @Column(name = "id_cliente")
     private Integer id;
     private String nome;
+
+    @Column(unique = true)
     private String cpf;
     private LocalDate dataNascimento;
+
+    @Column(unique = true)
     private String email;
     private String telefone;
     private String senha;
@@ -28,6 +36,7 @@ public class Cliente {
     private LocalDateTime termoAceitoEm;
     private String tokenRecuperacao;
     private LocalDateTime tokenExpiraEm;
+
 
     public Integer getId() {
         return id;
@@ -132,4 +141,5 @@ public class Cliente {
     public void setTokenExpiraEm(LocalDateTime tokenExpiraEm) {
         this.tokenExpiraEm = tokenExpiraEm;
     }
+
 }

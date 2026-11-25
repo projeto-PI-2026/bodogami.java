@@ -1,4 +1,4 @@
-package com.nexatech.bodogami.dto;
+package com.nexatech.bodogami.dto.Usuario;
 
 public class UsuarioResponseDto {
 

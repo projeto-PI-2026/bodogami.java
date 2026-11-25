@@ -1,4 +1,4 @@
-package com.nexatech.bodogami.dto;
+package com.nexatech.bodogami.dto.Cliente;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

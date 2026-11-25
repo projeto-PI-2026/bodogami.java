@@ -1,17 +1,10 @@
-package com.nexatech.bodogami;
+package com.nexatech.bodogami.dto.Jogo;
 
-public class TipoJogo {
+public class TipoJogoResponseDto {
+
     private Integer id_tipo_jogo;
     private String nome_tipo;
     private String descricao;
-
-    public TipoJogo(Integer id_tipo_jogo, String nome_tipo, String descricao) {
-        this.id_tipo_jogo = id_tipo_jogo;
-        this.nome_tipo = nome_tipo;
-        this.descricao = descricao;
-    }
-
-    public TipoJogo() {}
 
     public Integer getId_tipo_jogo() {
         return id_tipo_jogo;

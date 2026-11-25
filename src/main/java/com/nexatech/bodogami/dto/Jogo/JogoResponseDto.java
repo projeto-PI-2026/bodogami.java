@@ -1,6 +1,7 @@
-package com.nexatech.bodogami;
+package com.nexatech.bodogami.dto.Jogo;
 
-public class Jogo {
+public class JogoResponseDto {
+
     private Integer id_jogo;
     private String nome;
     private String descricao;
@@ -15,29 +16,6 @@ public class Jogo {
     private Integer fk_tipo_jogo;
     private String nomeTipo;
     private String nomeGenero;
-
-    public Jogo (Integer id_jogo, String nome, String descricao, String editora,
-                Double valor_aluguel_diaria, String imagem_url, Integer min_jogadores,
-                Integer max_jogadores, Integer idade_min, Integer quantidade, Integer id_genero,
-                Integer fk_tipo_jogo, String nomeTipo, String nomeGenero) {
-        this.id_jogo = id_jogo;
-        this.nome = nome;
-        this.descricao = descricao;
-        this.editora = editora;
-        this.valor_aluguel_diaria = valor_aluguel_diaria;
-        this.imagem_url = imagem_url;
-        this.min_jogadores = min_jogadores;
-        this.max_jogadores = max_jogadores;
-        this.idade_min = idade_min;
-        this.quantidade = quantidade;
-        this.id_genero = id_genero;
-        this.fk_tipo_jogo = fk_tipo_jogo;
-        this.nomeTipo = nomeTipo;
-        this.nomeGenero = nomeGenero;
-    }
-
-    public Jogo() {
-    }
 
     public Integer getId_jogo() {
         return id_jogo;
